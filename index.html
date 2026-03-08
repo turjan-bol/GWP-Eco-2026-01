@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupos de WhatsApp - Economía UAGRM</title>
+    <!-- Tailwind CSS para el diseño -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transition: all 0.2s ease-in-out; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header / Banner -->
+    <header class="bg-blue-800 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center space-x-4">
+                <i class="fa-solid fa-graduation-cap text-4xl text-blue-300"></i>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold">Carrera de Economía</h1>
+                    <p class="text-blue-200 mt-1">Universidad Autónoma Gabriel René Moreno</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Sección de Bienvenida e Indicaciones -->
+        <section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">
+                ¡Bienvenidos al Semestre 1/2026! 🎓
+            </h2>
+            <p class="text-gray-600 mb-4">Este es el directorio oficial de grupos de WhatsApp de las materias. Por favor, lee las siguientes indicaciones antes de unirte:</p>
+            
+            <ul class="space-y-3">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-mobile-screen-button text-green-600 mt-1 mr-3 w-5 text-center"></i>
+                    <span><strong>Grupos Directos:</strong> Busca tu materia en la lista y haz clic en "Unirme al Grupo" para ingresar a WhatsApp.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-building-columns text-blue-600 mt-1 mr-3 w-5 text-center"></i>
+                    <span><strong>Materias Presenciales:</strong> Si el botón dice "Ir a Plataforma Virtual", ingresa al link, busca tu materia en <em>"Mis Cursos"</em> y allí encontrarás el enlace oficial al grupo de WhatsApp.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-circle-question text-red-500 mt-1 mr-3 w-5 text-center"></i>
+                    <span><strong>¿Problemas para ingresar?</strong> Comunícate con Dirección de Carrera vía WhatsApp al <a href="https://wa.me/59175411570" target="_blank" class="text-blue-600 font-semibold hover:underline">+591 75411570</a> o consulta directamente con tu docente en aula.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Buscador -->
+        <section class="mb-8 relative">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                </div>
+                <input type="text" id="searchInput" 
+                    class="block w-full pl-10 pr-3 py-4 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 sm:text-md shadow-sm" 
+                    placeholder="Buscar por materia, sigla, docente o grupo...">
+            </div>
+            <p class="text-sm text-gray-500 mt-2" id="resultsCount">Cargando materias...</p>
+        </section>
+
+        <!-- Contenedor de las Tarjetas (Materias) -->
+        <section id="coursesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Las tarjetas se generarán aquí mediante JavaScript -->
+        </section>
+
+    </main>
+
+    <!-- Datos de Excel (Aquí pegarás tus datos reales) -->
+    <script>
+        /* ========================================================================
+        INSTRUCCIONES PARA ACTUALIZAR LOS DATOS:
+        1. Abre tu archivo Excel.
+        2. Selecciona TODA la tabla (incluyendo los encabezados: Sigla, Grp, Nombre...).
+        3. Cópiala (Ctrl+C).
+        4. Borra todo el texto que está entre los símbolos (`) aquí abajo y pega tus datos (Ctrl+V).
+        ========================================================================
+        */
+        const rawData = `
+,Sigla,Grp,Nombre de la Materia,NSA,Nombre Docente,Días,Horario,Aula,Link
+,ECO100,ND,ECONOMÍA GENERAL,1,DURAN MENDIA CARMEN NELLY,M-J,13:45-16:00,10,https://presencial.uagrm.edu.bo
+,ECO100,X9,ECONOMÍA GENERAL,1,MUGUERTEGUI TORRICO JAVIER AXEL,L-M-V,10:00-11:30,10,https://presencial.uagrm.edu.bo
+,INV100,DM,LENGUAJE Y ESTRATEGIAS DE APREND.,1,BELTRAN DE LOAYZA M-JILIN,L-M-V,16:45-18:15,11,https://presencial.uagrm.edu.bo
+,INV100,ME,LENGUAJE Y ESTRATEGIAS DE APREND.,1,RIVERA LANZA DE MANSILLA CARMIÑA,L-M-V,8:30-10:00,12,https://chat.whatsapp.com/KiUEy2QHdClKS4k3CGqkpl
+,MAT101,CA,ÁLGEBRA,1,AREVALO LOAYZA CARLOS SILVIO,M-J,18:15-20:30,15,https://chat.whatsapp.com/K5J0qBpRZvq5OrC1b9DE3R
+,CPO200,M,CIENCIA POLITICA,7,SORIA MEDINA EBERT,L-M-V,16:45-18:15,13,https://presencial.uagrm.edu.bo
+,ECO430,M2,CIENCIA POLITICA,7,RAU FLORES EDGAR,L-M-V,19:45-21:15,4,https://presencial.uagrm.edu.bo
+,ECO450,ES,POLITICA ECONÓMICA,8,SORIA MEDINA EBERT,M-J,9:15-11:30,264-01,https://presencial.uagrm.edu.bo
+,ECO450,X,POLITICA ECONÓMICA,8,LOPEZ APARICIO JULIO WALDO,L-M-V,8:30-10:00,14,https://chat.whatsapp.com/H3WuNI8PWJd8NAcIKaNiA6
+,ECO460,Z,ECONOMÍA NACIONAL Y REGIONAL,8,ESCOBAR DURAN EMILIO JAVIER,L-M-V,18:15-19:45,14,https://chat.whatsapp.com/I6yDjYWrTjC9zDbrINHTIN
+        `;
+        // ========================================================================
+
+        let coursesData = [];
+
+        // Función para leer los datos pegados desde Excel/CSV
+        function parseData(textData) {
+            const lines = textData.trim().split('\n');
+            if (lines.length === 0) return [];
+
+            let data = [];
+            let headers = [];
+            let startIdx = 0;
+            let separator = ',';
+
+            // Buscar la fila de encabezados
+            for (let i = 0; i < lines.length; i++) {
+                const lineLow = lines[i].toLowerCase();
+                if (lineLow.includes('sigla') && lineLow.includes('materia')) {
+                    // Detectar si fue pegado de Excel (TABS) o si es CSV (comas)
+                    separator = lines[i].includes('\t') ? '\t' : ',';
+                    headers = lines[i].split(separator).map(h => h.trim().replace(/^"|"$/g, ''));
+                    startIdx = i + 1;
+                    break;
+                }
+            }
+
+            // Procesar las filas de datos
+            for (let i = startIdx; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                const cols = lines[i].split(separator);
+                let rowObj = {};
+                
+                headers.forEach((header, index) => {
+                    let cleanHeader = header.trim();
+                    let value = cols[index] ? cols[index].trim().replace(/^"|"$/g, '') : '';
+                    if (cleanHeader) {
+                        rowObj[cleanHeader] = value;
+                    }
+                });
+
+                // Helper para buscar con variaciones de mayúsculas/minúsculas
+                const getVal = (keys) => {
+                    for(let key of keys) {
+                        let found = Object.keys(rowObj).find(k => k.toLowerCase() === key.toLowerCase());
+                        if(found && rowObj[found]) return rowObj[found];
+                    }
+                    return '';
+                };
+
+                const sigla = getVal(['sigla']);
+                const materia = getVal(['nombre de la materia', 'materia']);
+
+                if (sigla || materia) {
+                    data.push({
+                        sigla: sigla,
+                        grupo: getVal(['grp', 'grupo']),
+                        materia: materia,
+                        docente: getVal(['nombre docente', 'docente']),
+                        dias: getVal(['días', 'dias']),
+                        horario: getVal(['horario']),
+                        aula: getVal(['aula']),
+                        link: getVal(['link', 'enlace'])
+                    });
+                }
+            }
+            return data;
+        }
+
+        // Función para renderizar las tarjetas
+        function renderCourses(courses) {
+            const container = document.getElementById('coursesContainer');
+            const countLabel = document.getElementById('resultsCount');
+            container.innerHTML = '';
+
+            countLabel.textContent = `Mostrando ${courses.length} materia(s)`;
+
+            if (courses.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-10 bg-white rounded-xl shadow-sm border border-gray-100">
+                        <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3"></i>
+                        <p class="text-gray-500">No se encontraron materias con esa búsqueda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            courses.forEach(course => {
+                const isWhatsapp = course.link.toLowerCase().includes('whatsapp.com');
+                const isPresencial = course.link.toLowerCase().includes('presencial.uagrm');
+                
+                let btnClass = "bg-gray-600 hover:bg-gray-700 text-white";
+                let btnText = "Ir al Enlace";
+                let btnIcon = "fa-solid fa-link";
+
+                if (isWhatsapp) {
+                    btnClass = "bg-[#25D366] hover:bg-[#1ebe5d] text-white";
+                    btnText = "Unirme al WhatsApp";
+                    btnIcon = "fa-brands fa-whatsapp text-lg";
+                } else if (isPresencial) {
+                    btnClass = "bg-blue-600 hover:bg-blue-700 text-white";
+                    btnText = "Plataforma Virtual";
+                    btnIcon = "fa-solid fa-globe";
+                }
+
+                // Deshabilitar botón si no hay link
+                const btnHtml = course.link ? 
+                    `<a href="${course.link}" target="_blank" class="block w-full text-center py-2.5 rounded-lg font-medium transition-colors ${btnClass}">
+                        <i class="${btnIcon} mr-2"></i> ${btnText}
+                    </a>` : 
+                    `<button disabled class="block w-full text-center py-2.5 rounded-lg font-medium bg-gray-200 text-gray-500 cursor-not-allowed">
+                        <i class="fa-solid fa-link-slash mr-2"></i> Sin enlace
+                    </button>`;
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col justify-between card-hover";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full">
+                                ${course.sigla}
+                            </span>
+                            <span class="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full border border-gray-200">
+                                Grupo: ${course.grupo || 'N/A'}
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold text-gray-900 leading-tight mb-1">${course.materia}</h3>
+                        <p class="text-sm text-gray-600 mb-4"><i class="fa-solid fa-chalkboard-user w-4 mr-1 text-gray-400"></i> ${course.docente || 'Por asignar'}</p>
+                        
+                        <div class="space-y-2 mb-6">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fa-regular fa-calendar-days w-5 text-gray-400"></i>
+                                <span>${course.dias}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fa-regular fa-clock w-5 text-gray-400"></i>
+                                <span>${course.horario}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fa-solid fa-door-open w-5 text-gray-400"></i>
+                                <span>Aula: ${course.aula}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-auto">
+                        ${btnHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Buscador en tiempo real
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = coursesData.filter(c => 
+                (c.materia && c.materia.toLowerCase().includes(term)) ||
+                (c.sigla && c.sigla.toLowerCase().includes(term)) ||
+                (c.docente && c.docente.toLowerCase().includes(term)) ||
+                (c.grupo && c.grupo.toLowerCase().includes(term))
+            );
+            renderCourses(filtered);
+        });
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            coursesData = parseData(rawData);
+            renderCourses(coursesData);
+        });
+
+    </script>
+</body>
+</html>
