@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -13,6 +13,17 @@
                     colors: {
                         'eco-green': '#98C72B',
                         'eco-blue': '#193152',
+                    },
+                    animation: {
+                        blob: "blob 7s infinite",
+                    },
+                    keyframes: {
+                        blob: {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" },
+                        }
                     }
                 }
             }
@@ -25,48 +36,72 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transition: all 0.2s ease-in-out; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
     </style>
 </head>
 <body class="text-gray-800">
 
-    <!-- Header / Banner -->
-    <header class="bg-eco-blue text-white shadow-md border-b-4 border-eco-green">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="flex items-center space-x-4">
-                <img src="https://raw.githubusercontent.com/turjan-bol/GWP-Eco-2026-01/main/logo.png" alt="Logo Economía UAGRM" class="h-16 md:h-20 w-auto object-contain bg-white rounded-lg p-1 shadow-sm" onerror="this.onerror=null; this.src='https://via.placeholder.com/80/193152/98C72B?text=ECO';">
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-bold">Carrera de Economía</h1>
-                    <p class="text-eco-green mt-1 font-semibold tracking-wide">Universidad Autónoma Gabriel René Moreno</p>
+    <!-- Hero Section con Formas Orgánicas -->
+    <div class="relative bg-eco-blue overflow-hidden">
+        <!-- Formas orgánicas animadas de fondo -->
+        <div class="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+            <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-eco-green opacity-20 rounded-full mix-blend-screen filter blur-3xl animate-blob"></div>
+            <div class="absolute top-[20%] right-[-5%] w-72 h-72 bg-blue-400 opacity-20 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-[-20%] left-[20%] w-80 h-80 bg-eco-green opacity-20 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 md:pt-20 md:pb-32 flex flex-col md:flex-row items-center justify-between gap-10">
+            
+            <!-- Izquierda: Logo y Título -->
+            <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-left space-y-6 md:space-y-0 md:space-x-8 md:w-1/2">
+                <div class="relative group flex-shrink-0">
+                    <!-- Sombra circular detrás del logo -->
+                    <div class="absolute inset-0 bg-eco-green rounded-full transform scale-105 opacity-60 group-hover:scale-110 transition-transform duration-500"></div>
+                    <img src="https://raw.githubusercontent.com/turjan-bol/GWP-Eco-2026-01/main/logo.png" alt="Logo Economía UAGRM" class="relative w-28 h-28 md:w-36 md:h-36 object-contain bg-white rounded-full p-2 shadow-2xl border-4 border-white/30" onerror="this.onerror=null; this.src='https://via.placeholder.com/120/193152/98C72B?text=ECO';">
+                </div>
+                <div class="mt-4 md:mt-2">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight drop-shadow-md">
+                        Carrera de <br class="hidden md:block" />
+                        <span class="text-eco-green inline-block mt-1">Economía</span>
+                    </h1>
+                    <p class="text-blue-100 mt-4 text-base md:text-lg font-medium tracking-wide">Universidad Autónoma Gabriel René Moreno</p>
                 </div>
             </div>
+
+            <!-- Derecha: Tarjeta Glassmorphism de Bienvenida -->
+            <div class="md:w-1/2 w-full bg-white/10 backdrop-blur-md border border-white/20 p-6 md:p-8 rounded-[2rem] shadow-2xl text-white transform hover:scale-[1.02] transition-transform duration-300">
+                <h2 class="text-2xl font-bold mb-5 flex items-center border-b border-white/20 pb-4">
+                    <span class="bg-eco-green text-eco-blue w-10 h-10 flex items-center justify-center rounded-xl mr-4 shadow-lg text-xl">🎓</span>
+                    ¡Bienvenidos al Semestre 1/2026!
+                </h2>
+                <ul class="space-y-4 text-sm md:text-base text-blue-50/90">
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-mobile-screen-button text-eco-green mt-1 mr-4 text-xl w-6 text-center drop-shadow"></i>
+                        <span><strong>Grupos Directos:</strong> Busca tu materia en la lista y haz clic en "Unirme al WhatsApp".</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-building-columns text-blue-300 mt-1 mr-4 text-xl w-6 text-center drop-shadow"></i>
+                        <span><strong>Presenciales:</strong> Ingresa a la Plataforma Virtual, ve a "Mis Cursos" y busca el enlace.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-circle-question text-red-400 mt-1 mr-4 text-xl w-6 text-center drop-shadow"></i>
+                        <span><strong>¿Problemas?</strong> Comunícate con Dirección al <a href="https://wa.me/59175411570" target="_blank" class="text-eco-green font-bold hover:text-white underline decoration-eco-green underline-offset-4 transition-all">+591 75411570</a>.</span>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Forma de Ola Inferior (Wave) -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10" style="transform: translateY(1px);">
+            <svg class="relative block w-full h-[60px] md:h-[120px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#f3f4f6" fill-opacity="1" d="M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,160C672,160,768,192,864,213.3C960,235,1056,245,1152,224C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         
-        <!-- Sección de Bienvenida e Indicaciones -->
-        <section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
-            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">
-                ¡Bienvenidos al Semestre 1/2026! 🎓
-            </h2>
-            <p class="text-gray-600 mb-4">Este es el directorio oficial de grupos de WhatsApp de las materias. Por favor, lee las siguientes indicaciones antes de unirte:</p>
-            
-            <ul class="space-y-3">
-                <li class="flex items-start">
-                    <i class="fa-solid fa-mobile-screen-button text-eco-green mt-1 mr-3 w-5 text-center"></i>
-                    <span><strong>Grupos Directos:</strong> Busca tu materia en la lista y haz clic en "Unirme al Grupo" para ingresar a WhatsApp.</span>
-                </li>
-                <li class="flex items-start">
-                    <i class="fa-solid fa-building-columns text-eco-blue mt-1 mr-3 w-5 text-center"></i>
-                    <span><strong>Materias Presenciales:</strong> Si el botón dice "Ir a Plataforma Virtual", ingresa al link, busca tu materia en <em>"Mis Cursos"</em> y allí encontrarás el enlace oficial al grupo de WhatsApp.</span>
-                </li>
-                <li class="flex items-start">
-                    <i class="fa-solid fa-circle-question text-red-500 mt-1 mr-3 w-5 text-center"></i>
-                    <span><strong>¿Problemas para ingresar?</strong> Comunícate con Dirección de Carrera vía WhatsApp al <a href="https://wa.me/59175411570" target="_blank" class="text-eco-blue font-semibold hover:text-eco-green transition-colors">+591 75411570</a> o consulta directamente con tu docente en aula.</span>
-                </li>
-            </ul>
-        </section>
-
         <!-- Buscador -->
         <section class="mb-8 relative">
             <div class="relative">
